@@ -9,6 +9,7 @@ namespace ClotheBusinessObject.ViewModel
 {
     public class ClotheVM
     {
+        public Guid ClotheID { get; set; }
         public string ClotheName { get; set; }
         public double Price { get; set; }
         public string Description { get; set; }

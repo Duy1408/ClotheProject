@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using ClotheBusinessObject.BusinessObject;
+using ClotheBusinessObject.DTO.Create;
+using ClotheBusinessObject.DTO.Update;
 using ClotheBusinessObject.ViewModel;
 
 namespace ClotheProjectSystem.Mapper
@@ -9,6 +11,9 @@ namespace ClotheProjectSystem.Mapper
         public ApplicationMapper()
         {
             CreateMap<ClotheVM, Clothe>().ReverseMap();
+            CreateMap<ClotheCreateDTO, Clothe>().ReverseMap();
+            CreateMap<ClotheUpdateDTO, Clothe>().ReverseMap();
+
         }
     }
 }

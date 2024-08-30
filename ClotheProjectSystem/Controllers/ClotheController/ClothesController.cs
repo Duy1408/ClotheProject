@@ -43,12 +43,28 @@ namespace ClotheProjectSystem.Controllers.ClotheController
         }catch(Exception ex)
             {
                 return BadRequest(ex.Message);
-
             }
-        }
+            }
 
         // GET: api/Clothes/5
         [HttpGet("{id}")]
+
+        //public ActionResult <Clothe> GetClothesByID(Guid id)
+        //{
+        //    try
+        //    {
+        //        if (_clothe.GetAllClothe() == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        var clothes = _clothe.GetClotheByID(id);
+        //        var response = _mapper.Map<List<ClotheVM>>(clothes);
+        //        return Ok(response);
+        //    }catch(Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
         public ActionResult<Clothe> GetClothe(Guid id)
         {
             if (_clothe.GetAllClothe() == null)

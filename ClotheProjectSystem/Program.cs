@@ -18,6 +18,10 @@ builder.Services.AddAutoMapper(typeof(ApplicationMapper));
 //Add Scoped
 builder.Services.AddScoped<IClotheRepo, ClotheRepo>();
 builder.Services.AddScoped<IClotheService, ClotheService>();
+builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IJWTTokenService, JWTTokenService>();
+
 
 
 

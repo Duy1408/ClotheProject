@@ -8,29 +8,43 @@ using Microsoft.EntityFrameworkCore;
 using ClotheBusinessObject.BusinessObject;
 using Service.Interface;
 using SQLitePCL;
+using AutoMapper;
+using ClotheBusinessObject.ViewModel;
 
-namespace ClotheProjectSystem.Controllers
+namespace ClotheProjectSystem.Controllers.ClotheController
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ClothesController : ControllerBase
     {
         private readonly IClotheService _clothe;
+        private readonly IMapper _mapper;
 
-        public ClothesController(IClotheService clothe)
+
+        public ClothesController(IClotheService clothe, IMapper mapper)
         {
-           _clothe = clothe;
+            _clothe = clothe;
+            _mapper = mapper;
         }
 
         // GET: api/Clothes
         [HttpGet]
         public ActionResult<IEnumerable<Clothe>> GetClothes()
         {
-          if (_clothe.GetAllClothe() == null)
-          {
-              return NotFound();
-          }
-            return  _clothe.GetAllClothe().ToList();
+            try { 
+            if (_clothe.GetAllClothe() == null)
+            {
+                return NotFound();
+            }
+            var clothes = _clothe.GetAllClothe();
+            var response = _mapper.Map<List<ClotheVM>>(clothes);
+           
+            return Ok(response);
+        }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
 
         // GET: api/Clothes/5
@@ -41,7 +55,7 @@ namespace ClotheProjectSystem.Controllers
             {
                 return NotFound();
             }
-            var clothe =  _clothe.GetClotheByID(id);
+            var clothe = _clothe.GetClotheByID(id);
 
             if (clothe == null)
             {
@@ -56,12 +70,12 @@ namespace ClotheProjectSystem.Controllers
         [HttpPut("{id}")]
         public IActionResult PutClothe(Guid id, Clothe clothe)
         {
-            if (_clothe.GetAllClothe()==null)
+            if (_clothe.GetAllClothe() == null)
             {
                 return BadRequest();
             }
 
-         
+
 
             try
             {
@@ -69,7 +83,7 @@ namespace ClotheProjectSystem.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (_clothe.GetAllClothe()==null)
+                if (_clothe.GetAllClothe() == null)
                 {
                     return NotFound();
                 }
@@ -87,7 +101,7 @@ namespace ClotheProjectSystem.Controllers
         [HttpPost]
         public ActionResult<Clothe> PostClothe(Clothe clothe)
         {
-            if (_clothe.GetAllClothe()== null)
+            if (_clothe.GetAllClothe() == null)
             {
                 return Problem("Entity set 'ClotheShopSystemDBContext.Clothes'  is null.");
             }
@@ -100,7 +114,7 @@ namespace ClotheProjectSystem.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClothe(Guid id)
         {
-            if (_clothe.GetAllClothe()==null)
+            if (_clothe.GetAllClothe() == null)
             {
                 return NotFound();
             }

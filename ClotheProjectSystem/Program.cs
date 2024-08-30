@@ -1,4 +1,5 @@
 
+using ClotheProjectSystem.Mapper;
 using Repo.Interface;
 using Repo.Repository;
 using Service.Interface;
@@ -12,6 +13,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//Mapper
+builder.Services.AddAutoMapper(typeof(ApplicationMapper));
+//Add Scoped
 builder.Services.AddScoped<IClotheRepo, ClotheRepo>();
 builder.Services.AddScoped<IClotheService, ClotheService>();
 

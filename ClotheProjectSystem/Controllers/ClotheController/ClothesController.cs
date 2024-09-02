@@ -46,41 +46,42 @@ namespace ClotheProjectSystem.Controllers.ClotheController
             }
             }
 
-        // GET: api/Clothes/5
-        [HttpGet("{id}")]
+        //// GET: api/Clothes/5
+        //[HttpGet("{id}")]
 
-        //public ActionResult <Clothe> GetClothesByID(Guid id)
+
+        //public ActionResult<Clothe> GetClothe(Guid id)
         //{
-        //    try
+        //    if (_clothe.GetAllClothe() == null)
         //    {
-        //        if (_clothe.GetAllClothe() == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        var clothes = _clothe.GetClotheByID(id);
-        //        var response = _mapper.Map<List<ClotheVM>>(clothes);
-        //        return Ok(response);
-        //    }catch(Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
+        //        return NotFound();
         //    }
+        //    var clothe = _clothe.GetClotheByID(id);
+
+        //    if (clothe == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return clothe;
         //}
-        public ActionResult<Clothe> GetClothe(Guid id)
+
+        [HttpGet("GetClotheByID/{id}")]
+        public IActionResult GetClotheByID(Guid id)
         {
-            if (_clothe.GetAllClothe() == null)
-            {
-                return NotFound();
-            }
+
             var clothe = _clothe.GetClotheByID(id);
 
-            if (clothe == null)
+            if (clothe != null)
             {
-                return NotFound();
+                var responese = _mapper.Map<ClotheVM>(clothe);
+
+                return Ok(responese);
             }
 
-            return clothe;
-        }
+            return NotFound();
 
+        }
         // PUT: api/Clothes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

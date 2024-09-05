@@ -10,6 +10,9 @@ using Service.Interface;
 using SQLitePCL;
 using AutoMapper;
 using ClotheBusinessObject.ViewModel;
+using Azure.Storage.Blobs;
+using ClotheBusinessObject.DTO.Create;
+using ClotheBusinessObject.DTO.Request;
 
 namespace ClotheProjectSystem.Controllers.ClotheController
 {
@@ -19,12 +22,15 @@ namespace ClotheProjectSystem.Controllers.ClotheController
     {
         private readonly IClotheService _clothe;
         private readonly IMapper _mapper;
+        private readonly BlobServiceClient _blobServiceClient;
 
 
-        public ClothesController(IClotheService clothe, IMapper mapper)
+        public ClothesController(IClotheService clothe, IMapper mapper, BlobServiceClient blobServiceClient)
         {
             _clothe = clothe;
             _mapper = mapper;
+            _blobServiceClient = blobServiceClient;
+
         }
 
         // GET: api/Clothes
@@ -116,15 +122,51 @@ namespace ClotheProjectSystem.Controllers.ClotheController
         // POST: api/Clothes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public ActionResult<Clothe> PostClothe(Clothe clothe)
+        public ActionResult<Clothe> PostClothe([FromForm] ClotheRequestDTO clothe)
         {
-            if (_clothe.GetAllClothe() == null)
-            {
-                return Problem("Entity set 'ClotheShopSystemDBContext.Clothes'  is null.");
-            }
-            _clothe.AddNewClothe(clothe);
 
-            return CreatedAtAction("GetClothe", new { id = clothe.ClotheID }, clothe);
+            try
+            {
+                var containerInstance = _blobServiceClient.GetBlobContainerClient("theclotheppictures");
+                string? bloUrl = null;
+                if (clothe.Image != null)
+                {
+                    var blobName = $"{Guid.NewGuid()}_{clothe.Image.FileName}";
+                    var blobInstance = containerInstance.GetBlobClient(blobName);
+                    blobInstance.Upload(clothe.Image.OpenReadStream());
+                    var storageAccountUrl = "https://clotheimage.blob.core.windows.net/theclotheppictures";
+                    bloUrl = $"{storageAccountUrl}/{blobName}";
+                }
+                var newClothe = new ClotheCreateDTO
+                {
+                    ClotheID = Guid.NewGuid(),
+                    ClotheName = clothe.ClotheName,
+                    Price = clothe.Price,
+                    Description = clothe.Description,
+                    Rent = clothe.Rent,
+                    Image = clothe.Image,
+                    ShopID = clothe.ShopID,
+                    Status = true,
+
+                };
+                var _clo = _mapper.Map<Clothe>(newClothe);
+                _clo.Image = bloUrl;
+                _clothe.AddNewClothe(_clo);
+                return Ok("create clothe successfully");
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            //if (_clothe.GetAllClothe() == null)
+            //{
+            //    return Problem("Entity set 'ClotheShopSystemDBContext.Clothes'  is null.");
+            //}
+            //_clothe.AddNewClothe(clothe);
+
+            //return CreatedAtAction("GetClothe", new { id = clothe.ClotheID }, clothe);
         }
 
         // DELETE: api/Clothes/5

@@ -1,4 +1,5 @@
 
+using Azure.Storage.Blobs;
 using ClotheProjectSystem.Mapper;
 using Repo.Interface;
 using Repo.Repository;
@@ -21,6 +22,8 @@ builder.Services.AddScoped<IClotheService, ClotheService>();
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IJWTTokenService, JWTTokenService>();
+//Azure Blob Storage
+builder.Services.AddScoped(_ => new BlobServiceClient(builder.Configuration.GetConnectionString("AzureBlobStorage")));
 
 
 

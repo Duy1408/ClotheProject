@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClotheProjectSystem", "Clot
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClotheSystem", "ClotheSystem\ClotheSystem.csproj", "{B321A18F-A455-4DD0-A0F2-46CC347AEFA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repo", "Repo\Repo.csproj", "{3251B1D6-D1F0-408F-9734-946F651B205F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repo", "Repo\Repo.csproj", "{3251B1D6-D1F0-408F-9734-946F651B205F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{74D9F7E0-9628-4CBE-BD28-6014EDDC9581}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{74D9F7E0-9628-4CBE-BD28-6014EDDC9581}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -19,7 +19,8 @@ namespace ClotheSystem.Pages
             client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Add(contentType);
-            ApiUrl = "https://localhost:7112/api/Auth/Login";
+            ApiUrl = "https://localhost:7296/api/Account/Login";
+
         }
         [BindProperty]
         public Account User { get; set; } = default!;
@@ -52,13 +53,13 @@ namespace ClotheSystem.Pages
                         if (roleClaim?.Value == "027695AF-C57A-4011-AE68-59967A29ED37") //Staff
                         {
                             HttpContext.Response.Cookies.Append("UserCookie", token);
-                            return RedirectToPage("./Staff/CreatePage");
+                            return RedirectToPage("./StaffPage/Index");
                         }
                    
                         else if (roleClaim?.Value == "Admin") //Admin
                         {
                             HttpContext.Response.Cookies.Append("AdminCookie", token);
-                            return RedirectToPage("./AdminPage/UserPage/Index");
+                            return RedirectToPage("./StaffPage/Index");
                         }
                     }
                 }

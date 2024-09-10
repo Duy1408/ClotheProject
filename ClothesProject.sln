@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClotheDAO", "ClotheDAO\Clot
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClotheProjectSystem", "ClotheProjectSystem\ClotheProjectSystem.csproj", "{EB8EA6F3-7555-4236-BC56-510BC707056D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClotheSystem", "ClotheSystem\ClotheSystem.csproj", "{B321A18F-A455-4DD0-A0F2-46CC347AEFA9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repo", "Repo\Repo.csproj", "{3251B1D6-D1F0-408F-9734-946F651B205F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{74D9F7E0-9628-4CBE-BD28-6014EDDC9581}"
@@ -33,10 +31,6 @@ Global
 		{EB8EA6F3-7555-4236-BC56-510BC707056D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB8EA6F3-7555-4236-BC56-510BC707056D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB8EA6F3-7555-4236-BC56-510BC707056D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B321A18F-A455-4DD0-A0F2-46CC347AEFA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B321A18F-A455-4DD0-A0F2-46CC347AEFA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B321A18F-A455-4DD0-A0F2-46CC347AEFA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B321A18F-A455-4DD0-A0F2-46CC347AEFA9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3251B1D6-D1F0-408F-9734-946F651B205F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3251B1D6-D1F0-408F-9734-946F651B205F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3251B1D6-D1F0-408F-9734-946F651B205F}.Release|Any CPU.ActiveCfg = Release|Any CPU

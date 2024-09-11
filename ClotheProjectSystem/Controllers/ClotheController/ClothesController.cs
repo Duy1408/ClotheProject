@@ -13,6 +13,7 @@ using ClotheBusinessObject.ViewModel;
 using Azure.Storage.Blobs;
 using ClotheBusinessObject.DTO.Create;
 using ClotheBusinessObject.DTO.Request;
+using ClotheBusinessObject.DTO.Update;
 
 namespace ClotheProjectSystem.Controllers.ClotheController
 {
@@ -91,32 +92,59 @@ namespace ClotheProjectSystem.Controllers.ClotheController
         // PUT: api/Clothes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult PutClothe(Guid id, Clothe clothe)
+        public IActionResult UpdateClothe([FromForm] ClotheUpdateDTO clothe, Guid id)
         {
-            if (_clothe.GetAllClothe() == null)
-            {
-                return BadRequest();
-            }
-
-
-
             try
             {
-                _clothe.UpdateClothe(clothe);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (_clothe.GetAllClothe() == null)
+                var containerInstance = _blobServiceClient.GetBlobContainerClient("theclotheppictures");
+                string? bloUrl = null;
+                if (clothe.Image != null)
                 {
-                    return NotFound();
+                    var blobName = $"{Guid.NewGuid()}_{clothe.Image.FileName}";
+                    var blobInstance = containerInstance.GetBlobClient(blobName);
+                    blobInstance.Upload(clothe.Image.OpenReadStream());
+                    var storageAccountUrl = "https://clotheimage.blob.core.windows.net/theclotheppictures";
+                    bloUrl = $"{storageAccountUrl}/{blobName}";
                 }
-                else
+                var clotheupdate = _clothe.GetClotheByID(id);
+                if(clotheupdate != null)
                 {
-                    throw;
-                }
-            }
+                    if (!string.IsNullOrEmpty(clothe.ClotheName))
+                    {
+                        clotheupdate.ClotheName = clothe.ClotheName;
+                    }
+                    if (clothe.Price.HasValue)
+                    {
+                        clotheupdate.Price = clothe.Price.Value;
+                    }
+                    if (!string.IsNullOrEmpty(clothe.Description))
+                    {
+                        clotheupdate.Description = clothe.Description;
+                    }
+                    if (clothe.Rent.HasValue)
+                    {
+                        clotheupdate.Rent = clothe.Rent.Value;
+                    }
+                    if (bloUrl != null)
+                    {
+                        clotheupdate.Image = bloUrl;
+                    }
+                    if (clothe.Status.HasValue)
+                    {
+                        clotheupdate.Status = clothe.Status.Value;
+                    }
 
-            return NoContent();
+                    _clothe.UpdateClothe(clotheupdate);
+                    return Ok("Update successfully");
+                }
+                return NotFound("Clothe not found");
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // POST: api/Clothes
@@ -160,13 +188,7 @@ namespace ClotheProjectSystem.Controllers.ClotheController
             {
                 return BadRequest(ex.Message);
             }
-            //if (_clothe.GetAllClothe() == null)
-            //{
-            //    return Problem("Entity set 'ClotheShopSystemDBContext.Clothes'  is null.");
-            //}
-            //_clothe.AddNewClothe(clothe);
 
-            //return CreatedAtAction("GetClothe", new { id = clothe.ClotheID }, clothe);
         }
 
         // DELETE: api/Clothes/5

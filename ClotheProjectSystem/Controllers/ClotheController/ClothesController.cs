@@ -53,25 +53,7 @@ namespace ClotheProjectSystem.Controllers.ClotheController
             }
             }
 
-        //// GET: api/Clothes/5
-        //[HttpGet("{id}")]
 
-
-        //public ActionResult<Clothe> GetClothe(Guid id)
-        //{
-        //    if (_clothe.GetAllClothe() == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var clothe = _clothe.GetClotheByID(id);
-
-        //    if (clothe == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return clothe;
-        //}
 
         [HttpGet("GetClotheByID/{id}")]
         public IActionResult GetClotheByID(Guid id)

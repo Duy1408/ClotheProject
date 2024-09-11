@@ -15,6 +15,8 @@ namespace ClotheBusinessObject.ViewModel
         public string Description { get; set; }
         public double Rent { get; set; }
         public string Image { get; set; }
-   
+        public bool Status { get; set; }
+
+
     }
 }

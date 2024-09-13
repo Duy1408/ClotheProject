@@ -35,7 +35,7 @@ namespace Repo.Repository
 
         public void UpdateClothe(Clothe clothe)
         {
-            dao.ChangeStatusClothe(clothe);
+            dao.UpdateClothe(clothe);
         }
 
 

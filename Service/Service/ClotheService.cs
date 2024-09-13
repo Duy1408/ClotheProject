@@ -39,7 +39,7 @@ namespace Service.Service
 
         public void UpdateClothe(Clothe clothe)
         {
-            _repo.ChangeStatusClothe(clothe);
+            _repo.UpdateClothe(clothe);
         }
     }
 }
